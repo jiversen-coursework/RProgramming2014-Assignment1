@@ -12,4 +12,13 @@ complete <- function(directory, id = 1:332) {
   ## ...
   ## where 'id' is the monitor ID number and 'nobs' is the
   ## number of complete cases
+  
+  ncomplete = vector()
+  for (i in id) {
+    fname <- paste(directory, "/", sprintf("%03d",i),'.csv',sep="")
+    #cat(fname)
+    sensordata <- read.csv(fname)
+    ncomplete = c(ncomplete,sum(complete.cases(sensordata)))
+  }
+  return(data.frame(id=id, nobs=ncomplete))
 }
