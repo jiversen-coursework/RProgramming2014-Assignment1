@@ -12,11 +12,17 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   ## Return the mean of the pollutant across all monitors list
   ## in the 'id' vector (ignoring NA values)
   
+  # JRI: I question why they ask for a 'flat' mean, rather than a mean of sensor means
+  
+  #sensormeans = vector();
+  flatlist = vector();
   for (i in id) {
     fname <- paste(directory, "/", sprintf("%03d",i),'.csv',sep="")
-    cat(fname)
+    #cat(fname)
     sensordata <- read.csv(fname)
-    sensormean <- 
+    #sensormeans[id] <- mean(sensordata[[pollutant]], na.rm=TRUE)
+    flatlist = c(flatlist, sensordata[[pollutant]])
   }
-  sensordata
+  #return(mean(sensormeans, na.rm=TRUE))
+  return(mean(flatlist, na.rm=TRUE))
 }
